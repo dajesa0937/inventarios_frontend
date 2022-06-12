@@ -1,7 +1,54 @@
 import React, { useState, useEffect } from 'react'
 
+import { getInventarios } from '../../services/inventarioService';
+import { InventarioCards } from './InventarioCards';
+import { InventarioNew } from './InventarioNew';
+
 export const InventarioView = () => {
+
+  const [inventarios, setInventarios] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+
+
+  const listarInventarios = async () => {
+    try {
+      const { data } = await getInventarios();
+      console.log(data);
+      setInventarios(data);
+
+    } catch (error) {
+
+      console.log(error);
+    }
+
+  }
+
+  useEffect(() => {
+    listarInventarios();
+  }, []);
+
+  const handleOpenModal = () => {
+    setOpenModal(!openModal)
+
+  }
+
   return (
-    <div>InventarioView</div>
+    <div className="container-fluid">
+      <div className="mt-2 mb-2 row row-cols-1 row-cols-md-4 g-4">
+        {
+          inventarios.map((inventario) => {
+            return <InventarioCards key={inventario._id} inventario={inventario} />
+          })
+        }
+
+      </div>
+
+      {
+        openModal ? <InventarioNew /> :
+          (<button className='btn btn-primary fab' onClick={() => handleOpenModal()}>
+            <i className="fa-solid fa-plus"></i>
+          </button>)
+      }
+    </div>
   )
 }
