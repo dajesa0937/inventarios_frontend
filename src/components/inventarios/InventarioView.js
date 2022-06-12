@@ -33,8 +33,8 @@ export const InventarioView = () => {
   }
 
   return (
-    <div className="container-fluid">
-      <div className="mt-2 mb-2 row row-cols-1 row-cols-md-4 g-4">
+    <div className="container">
+      <div className="mt-2 mb-2 row row-cols-1 row-cols-md-5 g-4">
         {
           inventarios.map((inventario) => {
             return <InventarioCards key={inventario._id} inventario={inventario} />
@@ -44,7 +44,7 @@ export const InventarioView = () => {
       </div>
 
       {
-        openModal ? <InventarioNew /> :
+        openModal ? <InventarioNew handleOpenModal={ handleOpenModal } /> :
           (<button className='btn btn-primary fab' onClick={() => handleOpenModal()}>
             <i className="fa-solid fa-plus"></i>
           </button>)

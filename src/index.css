@@ -40,3 +40,9 @@ body {
     height: 100%;
     overflow-y: auto;
 }
+
+.sidebar-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
