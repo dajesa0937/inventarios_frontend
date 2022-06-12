@@ -1,8 +1,69 @@
-import React from 'react'
+
+import React, {useState, useEffect} from 'react';
+import {getUsuarios} from '../../services/usuarioService';
+import {getMarcas} from '../../services/marcaService';
+import {getTiposEquipos} from '../../services/tipoEquipoService';
+import {getEstadosEquipos} from '../../services/estadoEquipoService';
 
 export const InventarioNew = ({ handleOpenModal }) => {
 
+  const [ usuarios, setUsuarios ] = useState([]);
+  const [ marcas, setMarcas ] = useState([]);
+  const [ tipos, setTipos ] = useState([]);
+  const [ estados, setEstados ] = useState([]);
 
+  useEffect(() => {
+    const listarUsuarios = async () =>{
+    try{
+          const {data} = await getUsuarios();
+          setUsuarios(data);
+    }catch(error){
+      console.log(error);
+      }
+    }
+    listarUsuarios();
+
+  }, []);
+
+  useEffect(() => {
+    const listarMarcas = async () =>{
+    try{
+          const {data} = await getMarcas();
+          setMarcas(data);
+    }catch(error){
+      console.log(error);
+      }
+    }
+    listarMarcas();
+
+  }, []);
+
+  useEffect(() => {
+    const listarTipos = async () =>{
+    try{
+          const {data} = await getTiposEquipos();
+          setTipos(data);
+    }catch(error){
+      console.log(error);
+      }
+    }
+    listarTipos();
+
+  }, []);
+
+
+  useEffect(() => {
+    const listarEstados = async () =>{
+    try{
+          const {data} = await getEstadosEquipos();
+          setEstados(data);
+    }catch(error){
+      console.log(error);
+      }
+    }
+    listarEstados();
+
+  }, []);
 
   return (
     <div className='sidebar'>
