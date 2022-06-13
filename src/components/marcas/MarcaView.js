@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getMarcas, crearMarca, editarMarca } from '../../services/marcaService';
 import {MarcaTable} from './MarcaTable';
+import Swal from  'sweetalert2';
 
 export const MarcaView = () => {
   const [marcas, setMarcas] = useState([]);
@@ -23,12 +24,29 @@ export const MarcaView = () => {
 
   const nuevaMarca = async (marca) => {
     try {
+      Swal.fire({
+        allowOutsideClick: false,
+        text:'Cargando...'
+      });
+       Swal.showLoading();
       const resp = await crearMarca(marca);
       console.log(resp.data);
       listarMarcas();
       setvaloresForm({ nombre: '', estado: '' })
-    } catch (error) {
+      
+      Swal.close();
+
+    } catch (error) {  
       console.log(error);
+
+      Swal.close();
+        let mensaje;
+        if (error && error.reponse && error.reponse.data){
+            mensaje = error.reponse.data;
+        }else{
+            mensaje = 'Ocurrio un error, INTENTE DE NUEVO';
+        }
+        Swal.fire('Error', mensaje, 'error');
     }
   }
 
