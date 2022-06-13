@@ -5,7 +5,7 @@ import { getMarcas } from '../../services/marcaService';
 import { getTiposEquipos } from '../../services/tipoEquipoService';
 import { getEstadosEquipos } from '../../services/estadoEquipoService';
 import { crearInventario} from '../../services/inventarioService';
-import Swal from 'sweetalert2';
+import Swal from  'sweetalert2';
 
 export const InventarioNew = ({ handleOpenModal, listarInventarios }) => {
 
@@ -18,6 +18,7 @@ export const InventarioNew = ({ handleOpenModal, listarInventarios }) => {
     fechaCompra = '', precio = '', usuario, marca, tipo, estado } = valoresForm;
 
   useEffect(() => {
+
     const listarUsuarios = async () => {
       try {
         const { data } = await getUsuarios();
@@ -97,7 +98,7 @@ export const InventarioNew = ({ handleOpenModal, listarInventarios }) => {
       },
 
     }
-    console.log(inventario);
+    
       try{
          Swal.fire({
             allowOutsideClick: false,
@@ -106,12 +107,19 @@ export const InventarioNew = ({ handleOpenModal, listarInventarios }) => {
            Swal.showLoading();
             const { data } = await crearInventario(inventario);
             console.log(data);
-            Swal.close();
             handleOpenModal();
             listarInventarios();
+            Swal.close();
       }catch(error){ 
         console.log(error);
         Swal.close();
+        let mensaje;
+        if (error && error.reponse && error.reponse.data){
+            mensaje = error.reponse.data;
+        }else{
+            mensaje = 'Ocurrio un error, INTENTE DE NUEVO';
+        }
+        Swal.fire('Error', mensaje, 'error');
       } 
   }
 

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { getInventarios } from '../../services/inventarioService';
 import { InventarioCards } from './InventarioCards';
 import { InventarioNew } from './InventarioNew';
+import Swal from 'sweetalert2';
 
 export const InventarioView = () => {
 
@@ -12,13 +13,22 @@ export const InventarioView = () => {
 
   const listarInventarios = async () => {
     try {
+
+      Swal.fire({
+        allowOutsideClick: false,
+        text: 'Cargando...'
+      });
+      Swal.showLoading();
+
       const { data } = await getInventarios();
-      console.log(data);
+      
       setInventarios(data);
 
-    } catch (error) {
+      Swal.close();
 
+    } catch (error) { 
       console.log(error);
+      Swal.close();
     }
 
   }
@@ -44,9 +54,9 @@ export const InventarioView = () => {
       </div>
 
       {
-        openModal ? <InventarioNew 
-              handleOpenModal={ handleOpenModal }
-              listarInventarios={listarInventarios} /> :
+        openModal ? <InventarioNew
+          handleOpenModal={handleOpenModal}
+          listarInventarios={listarInventarios} /> :
           (<button className='btn btn-primary fab' onClick={() => handleOpenModal()}>
             <i className="fa-solid fa-plus"></i>
           </button>)
