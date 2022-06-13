@@ -50,7 +50,7 @@ export const TipoView = () => {
     }
   }
 
-  const handleCrearMarca = (e) => {
+  const handleCrearTipo = (e) => {
     e.preventDefault();
     nuevoTipo(valoresForm);
   }
@@ -59,7 +59,7 @@ export const TipoView = () => {
 
   return (
     <div className='container-fluid'>
-      <form onSubmit={(e) => handleCrearMarca(e)}>
+      <form onSubmit={(e) => handleCrearTipo(e)}>
 
         <legend>CREAR / EDITAR TIPO EQUIPOS</legend>
         <div className="mb-3">

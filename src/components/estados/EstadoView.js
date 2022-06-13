@@ -50,7 +50,7 @@ export const EstadoView = () => {
     }
   }
 
-  const handleCrearMarca = (e) => {
+  const handleCrearEstado = (e) => {
     e.preventDefault();
     nuevoEstado(valoresForm);
   }
@@ -59,7 +59,7 @@ export const EstadoView = () => {
 
   return (
     <div className='container-fluid'>
-      <form onSubmit={(e) => handleCrearMarca(e)}>
+      <form onSubmit={(e) => handleCrearEstado(e)}>
 
         <legend>CREAR / EDITAR TIPO ESTADOS</legend>
         <div className="mb-3">
